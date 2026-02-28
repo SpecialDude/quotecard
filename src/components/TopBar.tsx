@@ -66,13 +66,53 @@ export default function TopBar({ onExport }: TopBarProps) {
                 </button>
               </div>
               
-              <button 
-                onClick={() => { onExport(true, 'png', 'share'); setShowExportMenu(false); }}
-                className="w-full flex items-center justify-center gap-2 p-3 border-2 border-zinc-200 hover:border-zinc-300 rounded-xl transition-colors text-zinc-700 font-medium"
-              >
-                <Share2 size={18} />
-                Share to App (WhatsApp, etc)
-              </button>
+              <div className="pt-4 border-t border-zinc-100">
+                <p className="text-xs text-zinc-500 mb-3 text-center">Share directly to</p>
+                <div className="grid grid-cols-4 gap-2">
+                  <button 
+                    onClick={() => { onExport(true, 'png', 'share'); setShowExportMenu(false); }}
+                    className="flex flex-col items-center gap-1.5 p-2 rounded-lg hover:bg-zinc-50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#25D366] text-white flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    </div>
+                    <span className="text-[10px] font-medium text-zinc-600">WhatsApp</span>
+                  </button>
+                  
+                  <button 
+                    onClick={() => { onExport(true, 'png', 'share'); setShowExportMenu(false); }}
+                    className="flex flex-col items-center gap-1.5 p-2 rounded-lg hover:bg-zinc-50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#128C7E] text-white flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                    </div>
+                    <span className="text-[10px] font-medium text-zinc-600">Status</span>
+                  </button>
+
+                  <button 
+                    onClick={() => { onExport(true, 'png', 'share'); setShowExportMenu(false); }}
+                    className="flex flex-col items-center gap-1.5 p-2 rounded-lg hover:bg-zinc-50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l16 16"></path><path d="M4 20L20 4"></path></svg>
+                    </div>
+                    <span className="text-[10px] font-medium text-zinc-600">X Story</span>
+                  </button>
+
+                  <button 
+                    onClick={() => { onExport(true, 'png', 'share'); setShowExportMenu(false); }}
+                    className="flex flex-col items-center gap-1.5 p-2 rounded-lg hover:bg-zinc-50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </div>
+                    <span className="text-[10px] font-medium text-zinc-600">FB Story</span>
+                  </button>
+                </div>
+                <p className="text-[10px] text-zinc-400 mt-2 text-center">
+                  Select the app from your device's share menu.
+                </p>
+              </div>
             </div>
           </div>
         </div>
