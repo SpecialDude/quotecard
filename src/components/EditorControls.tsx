@@ -183,45 +183,59 @@ function TemplateControls() {
     }
   };
 
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-3 gap-3">
-        {TEMPLATES.map(template => (
-          <button
-            key={template.id}
-            onClick={() => setTemplateId(template.id)}
-            className={cn(
-              "relative aspect-[3/4] rounded-xl overflow-hidden border-2 transition-all",
-              templateId === template.id ? "border-zinc-900 scale-95" : "border-transparent hover:scale-95"
-            )}
-          >
-            {template.type === 'solid' && <div className="w-full h-full" style={{ background: template.background }} />}
-            {template.type === 'gradient' && <div className="w-full h-full" style={{ background: template.background }} />}
-            {template.type === 'pattern' && <div className="w-full h-full" style={{ background: template.background }} />}
-            {template.type === 'photo' && template.id !== 'photo-custom' && (
-              <img src={template.background} alt={template.name} className="w-full h-full object-cover" />
-            )}
-            {template.id === 'photo-custom' && (
-              <div className="w-full h-full bg-zinc-200 flex flex-col items-center justify-center text-zinc-500">
-                <ImageIcon size={24} />
-                <span className="text-[10px] mt-1 font-medium">Upload</span>
-              </div>
-            )}
-            <div className="absolute inset-x-0 bottom-0 bg-black/50 text-white text-[10px] p-1 text-center backdrop-blur-sm">
-              {template.name}
-            </div>
-          </button>
-        ))}
-      </div>
+  // Group templates by mood
+  const templatesByMood = TEMPLATES.reduce((acc, template) => {
+    if (!acc[template.mood]) {
+      acc[template.mood] = [];
+    }
+    acc[template.mood].push(template);
+    return acc;
+  }, {} as Record<string, typeof TEMPLATES>);
 
-      {templateId === 'photo-custom' && (
-        <div className="mt-4">
-          <label className="block w-full py-3 px-4 border-2 border-dashed border-zinc-300 rounded-xl text-center cursor-pointer hover:bg-zinc-50 transition-colors">
-            <span className="text-sm font-medium text-zinc-600">Choose Photo</span>
-            <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
-          </label>
+  return (
+    <div className="space-y-8 pb-8">
+      {Object.entries(templatesByMood).map(([mood, templates]) => (
+        <div key={mood} className="space-y-3">
+          <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">{mood}</h3>
+          <div className="grid grid-cols-3 gap-3">
+            {templates.map(template => (
+              <button
+                key={template.id}
+                onClick={() => setTemplateId(template.id)}
+                className={cn(
+                  "relative aspect-[3/4] rounded-xl overflow-hidden border-2 transition-all",
+                  templateId === template.id ? "border-zinc-900 scale-95 shadow-md" : "border-transparent hover:scale-95"
+                )}
+              >
+                {template.type === 'solid' && <div className="w-full h-full" style={{ background: template.background }} />}
+                {template.type === 'gradient' && <div className="w-full h-full" style={{ background: template.background }} />}
+                {template.type === 'pattern' && <div className="w-full h-full" style={{ background: template.background }} />}
+                {template.type === 'photo' && template.id !== 'photo-custom' && (
+                  <img src={template.background} alt={template.name} className="w-full h-full object-cover" />
+                )}
+                {template.id === 'photo-custom' && (
+                  <div className="w-full h-full bg-zinc-100 flex flex-col items-center justify-center text-zinc-500 hover:bg-zinc-200 transition-colors">
+                    <ImageIcon size={24} />
+                    <span className="text-[10px] mt-1 font-medium">Upload</span>
+                  </div>
+                )}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent text-white text-[10px] p-2 pt-4 text-center">
+                  {template.name}
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {mood === 'Custom' && templateId === 'photo-custom' && (
+            <div className="mt-2">
+              <label className="block w-full py-3 px-4 border-2 border-dashed border-zinc-300 rounded-xl text-center cursor-pointer hover:bg-zinc-50 transition-colors">
+                <span className="text-sm font-medium text-zinc-600">Choose Photo</span>
+                <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+              </label>
+            </div>
+          )}
         </div>
-      )}
+      ))}
     </div>
   );
 }

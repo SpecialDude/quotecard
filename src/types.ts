@@ -22,6 +22,7 @@ export interface Template {
   background: string; // hex, gradient css, pattern url, or photo url
   defaultPadding: number;
   defaultTextColor: string;
+  mood: string;
 }
 
 export interface LayoutConfig {
