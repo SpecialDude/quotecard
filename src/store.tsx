@@ -44,14 +44,14 @@ const defaultLayout: LayoutConfig = {
   showBorder: false,
   borderColor: '#ffffff',
   borderWidth: 2,
-  textPosition: { x: 0.5, y: 0.5 }, // center
+  textPosition: { x: 0, y: 0.3 }, // centered horizontally (x=0 relative to padding), 30% down
 };
 
 const AppContext = createContext<AppState | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [draftId, setDraftId] = useState<string>(uuidv4());
-  const [text, setText] = useState('The only way to do great work is to love what you do.');
+  const [text, setText] = useState('<div>The only way to do great work is to love what you do.</div>');
   const [author, setAuthor] = useState('Steve Jobs');
   const [format, setFormat] = useState<TextFormat>(defaultFormat);
   const [templateId, setTemplateId] = useState<string>('photo-nature');

@@ -45,6 +45,8 @@ function TabButton({ active, onClick, icon, label }: { active: boolean, onClick:
   );
 }
 
+import RichTextEditor from './RichTextEditor';
+
 function TextControls() {
   const { text, author, format, setText, setAuthor, updateFormat } = useAppStore();
 
@@ -52,14 +54,12 @@ function TextControls() {
     <div className="space-y-4">
       <div>
         <label className="block text-xs font-medium text-zinc-500 mb-1">Quote</label>
-        <textarea 
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          className="w-full p-2 border border-zinc-300 rounded-lg resize-none focus:ring-2 focus:ring-zinc-900 outline-none"
-          rows={3}
+        <RichTextEditor 
+          html={text}
+          onChange={setText}
           placeholder="Enter your quote..."
         />
-        <div className="text-right text-xs text-zinc-400 mt-1">{text.length} chars</div>
+        <div className="text-right text-xs text-zinc-400 mt-1">{text.replace(/<[^>]*>?/gm, '').length} chars</div>
       </div>
 
       <div>
@@ -135,19 +135,8 @@ function TextControls() {
       </div>
 
       <div className="flex items-center justify-between">
-        <div className="flex gap-1 bg-zinc-100 p-1 rounded-lg">
-          <FormatBtn active={format.isBold} onClick={() => updateFormat({ isBold: !format.isBold })} icon={<Bold size={16} />} />
-          <FormatBtn active={format.isItalic} onClick={() => updateFormat({ isItalic: !format.isItalic })} icon={<Italic size={16} />} />
-          <FormatBtn active={format.isUnderline} onClick={() => updateFormat({ isUnderline: !format.isUnderline })} icon={<Underline size={16} />} />
-        </div>
-        
-        <div className="flex gap-1 bg-zinc-100 p-1 rounded-lg">
-          <FormatBtn active={format.align === 'left'} onClick={() => updateFormat({ align: 'left' })} icon={<AlignLeft size={16} />} />
-          <FormatBtn active={format.align === 'center'} onClick={() => updateFormat({ align: 'center' })} icon={<AlignCenter size={16} />} />
-          <FormatBtn active={format.align === 'right'} onClick={() => updateFormat({ align: 'right' })} icon={<AlignRight size={16} />} />
-        </div>
-
         <div className="flex items-center gap-2">
+          <label className="text-xs font-medium text-zinc-500">Text Color</label>
           <input 
             type="color" 
             value={format.color}
