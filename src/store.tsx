@@ -45,6 +45,7 @@ const defaultLayout: LayoutConfig = {
   borderColor: '#ffffff',
   borderWidth: 2,
   textPosition: { x: 0, y: 0.3 }, // centered horizontally (x=0 relative to padding), 30% down
+  showWatermark: true,
 };
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -82,7 +83,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setAuthor(draft.author);
     setFormat(draft.format);
     setTemplateId(draft.templateId);
-    setLayout(draft.layout);
+    setLayout({ ...defaultLayout, ...draft.layout });
     setCustomPhotoUrl(draft.customPhotoUrl);
   };
 

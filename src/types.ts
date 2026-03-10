@@ -34,6 +34,7 @@ export interface LayoutConfig {
   borderColor: string;
   borderWidth: number;
   textPosition: { x: number; y: number }; // relative 0-1 or absolute? Let's use absolute relative to canvas size, or just let Konva handle it.
+  showWatermark: boolean;
 }
 
 export interface QuoteDraft {

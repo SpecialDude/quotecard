@@ -283,6 +283,19 @@ function LayoutControls() {
           />
         </div>
       )}
+
+      <div className="pt-4 border-t border-zinc-200">
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-zinc-700">Show Watermark</label>
+          <input 
+            type="checkbox" 
+            checked={layout.showWatermark ?? true}
+            onChange={(e) => updateLayout({ showWatermark: e.target.checked })}
+            className="w-5 h-5 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+          />
+        </div>
+        <p className="text-xs text-zinc-500 mt-1">Display a small app watermark at the bottom of the card.</p>
+      </div>
     </div>
   );
 }

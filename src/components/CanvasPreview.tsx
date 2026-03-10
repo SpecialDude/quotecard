@@ -226,6 +226,23 @@ const CanvasPreview = forwardRef<CanvasPreviewRef, {}>((props, ref) => {
                 </div>
               )}
             </Rnd>
+
+            {(layout.showWatermark ?? true) && (
+              <div 
+                className="absolute bottom-6 left-0 right-0 text-center pointer-events-none"
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: `${Math.max(16, baseDim.w * 0.02)}px`,
+                  color: format.color,
+                  opacity: 0.6,
+                  textShadow: format.shadowIntensity > 0 
+                    ? `0px 2px ${format.shadowIntensity / 10}px rgba(0,0,0,${format.shadowIntensity / 100})`
+                    : 'none',
+                }}
+              >
+                {import.meta.env.VITE_WATERMARK_TEXT || 'quotecard.lovenotes.ai'}
+              </div>
+            )}
           </div>
         </div>
       )}
