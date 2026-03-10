@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
+import React, { useRef, useEffect } from 'react';
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 
 interface Props {
@@ -9,16 +8,29 @@ interface Props {
 }
 
 export default function RichTextEditor({ html, onChange, placeholder }: Props) {
-  const contentEditable = useRef<HTMLElement>(null);
+  const editorRef = useRef<HTMLDivElement>(null);
+  const isComposing = useRef(false);
 
-  const handleChange = (evt: ContentEditableEvent) => {
-    onChange(evt.target.value);
+  // Sync external HTML changes only when not actively composing text (fixes Android keyboard bugs)
+  useEffect(() => {
+    if (editorRef.current && !isComposing.current) {
+      if (editorRef.current.innerHTML !== html) {
+        editorRef.current.innerHTML = html;
+      }
+    }
+  }, [html]);
+
+  const handleInput = () => {
+    if (editorRef.current) {
+      onChange(editorRef.current.innerHTML);
+    }
   };
 
   const exec = (command: string, value?: string) => {
     document.execCommand(command, false, value);
-    if (contentEditable.current) {
-      contentEditable.current.focus();
+    if (editorRef.current) {
+      editorRef.current.focus();
+      onChange(editorRef.current.innerHTML);
     }
   };
 
@@ -33,14 +45,18 @@ export default function RichTextEditor({ html, onChange, placeholder }: Props) {
         <ToolbarButton onClick={() => exec('justifyCenter')} icon={<AlignCenter size={16} />} title="Align Center" />
         <ToolbarButton onClick={() => exec('justifyRight')} icon={<AlignRight size={16} />} title="Align Right" />
       </div>
-      <ContentEditable
-        innerRef={contentEditable}
-        html={html}
-        disabled={false}
-        onChange={handleChange}
-        tagName="div"
-        className="p-3 min-h-[120px] max-h-[300px] overflow-y-auto outline-none text-sm leading-relaxed"
-        placeholder={placeholder}
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={handleInput}
+        onCompositionStart={() => { isComposing.current = true; }}
+        onCompositionEnd={() => { 
+          isComposing.current = false; 
+          handleInput();
+        }}
+        onBlur={handleInput}
+        className="p-3 min-h-[120px] max-h-[300px] overflow-y-auto outline-none text-sm leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-zinc-400"
+        data-placeholder={placeholder}
       />
     </div>
   );

@@ -187,16 +187,20 @@ const CanvasPreview = forwardRef<CanvasPreviewRef, {}>((props, ref) => {
               scale={dimensions.scale}
               onDragStart={() => { isDragging.current = true; }}
               onDrag={(e, d) => {
-                setLocalPos({ x: d.x, y: d.y });
+                if (!isNaN(d.x) && !isNaN(d.y)) {
+                  setLocalPos({ x: d.x, y: d.y });
+                }
               }}
               onDragStop={(e, d) => {
                 isDragging.current = false;
-                updateLayout({
-                  textPosition: {
-                    x: (d.x - padding) / baseDim.w,
-                    y: d.y / baseDim.h,
-                  }
-                });
+                if (!isNaN(d.x) && !isNaN(d.y)) {
+                  updateLayout({
+                    textPosition: {
+                      x: (d.x - padding) / baseDim.w,
+                      y: d.y / baseDim.h,
+                    }
+                  });
+                }
               }}
               enableResizing={false}
               bounds="parent"
