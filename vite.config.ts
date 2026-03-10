@@ -12,7 +12,7 @@ export default defineConfig(({mode}) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+        includeAssets: ['pwa-192x192.svg', 'pwa-512x512.svg'],
         manifest: {
           name: 'QuoteCard',
           short_name: 'QuoteCard',

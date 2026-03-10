@@ -1,4 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#18181b"/>
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="200" fill="#ffffff">QC</text>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#27272a"/>
+      <stop offset="100%" stop-color="#18181b"/>
+    </linearGradient>
+    <linearGradient id="quote" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <rect x="106" y="106" width="300" height="300" rx="40" fill="url(#card)" stroke="#3f3f46" stroke-width="2" filter="url(#shadow)"/>
+  <path d="M213.3 309.3c-23.6 0-42.7-19.1-42.7-42.7s19.1-42.7 42.7-42.7c5.9 0 11.5 1.2 16.6 3.3-3.4-21.1-25-38.9-48.6-38.9v-34.1c37.7 0 68.3 30.6 68.3 68.3v93.9h-34.1v-7.1zm119.5 0c-23.6 0-42.7-19.1-42.7-42.7s19.1-42.7 42.7-42.7c5.9 0 11.5 1.2 16.6 3.3-3.4-21.1-25-38.9-48.6-38.9v-34.1c37.7 0 68.3 30.6 68.3 68.3v93.9h-34.1v-7.1z" fill="url(#quote)" transform="translate(256, 256) scale(1.8) translate(-260.35, -231.75)"/>
 </svg>
