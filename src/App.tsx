@@ -11,7 +11,7 @@ function MainApp() {
     if (!canvasRef.current) return;
     
     try {
-      const dataUrl = canvasRef.current.exportImage(hd, format);
+      const dataUrl = await canvasRef.current.exportImage(hd, format);
       
       if (action === 'download') {
         const link = document.createElement('a');

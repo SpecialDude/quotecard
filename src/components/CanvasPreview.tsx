@@ -56,11 +56,24 @@ const CanvasPreview = forwardRef<CanvasPreviewRef, {}>((props, ref) => {
       if (!captureRef.current) return '';
       
       const pixelRatio = hd ? 2 : 1;
+      
+      // Fetch Google Fonts CSS to bypass html-to-image's internal stylesheet reading
+      // which causes SecurityError on cross-origin stylesheets in some browsers.
+      let fontEmbedCSS = '';
+      try {
+        const fontUrl = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:wght@100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@300..700&display=swap';
+        const res = await fetch(fontUrl);
+        fontEmbedCSS = await res.text();
+      } catch (e) {
+        console.warn('Failed to fetch Google Fonts CSS for embedding', e);
+      }
+
       const options = {
         pixelRatio,
         quality: format === 'jpeg' ? 0.9 : 1,
         width: baseDim.w,
         height: baseDim.h,
+        fontEmbedCSS,
         style: {
           transform: 'scale(1)',
           transformOrigin: 'top left',
